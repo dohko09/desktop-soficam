@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="factura" language="groovy" pageWidth="612" pageHeight="500" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="96ed8f57-2a49-45fa-8c79-e1084a41c472">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idFactura" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select p.*,CONCAT(t.nombre,' ',t.apellido_paterno,' ',t.apellido_materno) as nombres,r.entrada,r.salida,r.tiempo,ROUND((r.tiempo*2)/60::numeric,2)::double precision as pago from pagos p inner join pagos_detalle pd 
+on p.id = pd.pago inner join trabajador t on p.trabajador = t.id inner join registro r on pd.registro = r.id where p.id=$P{idFactura}]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="fecha" class="java.sql.Timestamp"/>
+	<field name="trabajador" class="java.lang.Integer"/>
+	<field name="dias_trabajados" class="java.lang.String"/>
+	<field name="total" class="java.lang.Double"/>
+	<field name="nombres" class="java.lang.String"/>
+	<field name="entrada" class="java.sql.Timestamp"/>
+	<field name="salida" class="java.sql.Timestamp"/>
+	<field name="tiempo" class="java.lang.Integer"/>
+	<field name="pago" class="java.lang.Double"/>
+	<title>
+		<band height="115" splitType="Stretch">
+			<staticText>
+				<reportElement x="1" y="10" width="570" height="41" uuid="587a91f0-f5f8-46f7-aad5-68761a3a7c42"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Roboto" size="32" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SOFICAM]]></text>
+			</staticText>
+			<image>
+				<reportElement x="27" y="0" width="61" height="79" uuid="b54b1811-3458-4fe5-928d-7f1bf7a0a5db"/>
+				<imageExpression><![CDATA["C:\\SOFICAM\\src\\recursos\\logo1.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="1" y="51" width="570" height="26" uuid="74c4c84c-7003-4942-8698-c7c84a3905c2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Roboto" size="15" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Ciudadela el Paraiso. calles Junin y 24 de Mayo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="213" y="79" width="41" height="28" uuid="bf0bd73b-4c8c-4e5a-b827-f97d5e0877a8"/>
+				<textElement>
+					<font fontName="Roboto" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RUC:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="256" y="79" width="110" height="28" uuid="48d43315-972d-4e43-96c0-cd42882be69e"/>
+				<textElement>
+					<font fontName="Roboto" size="15" isBold="false"/>
+				</textElement>
+				<text><![CDATA[0703112961001]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="58" splitType="Stretch">
+			<textField>
+				<reportElement x="110" y="25" width="222" height="28" uuid="c7b96e89-167b-4a36-b0ff-60a397857263"/>
+				<textElement>
+					<font fontName="Roboto" size="15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombres}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="24" y="25" width="86" height="28" uuid="9761353a-65b2-41b8-a3b4-6c61f1a95e22"/>
+				<textElement>
+					<font fontName="Roboto" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Trabajador:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="88" y="0" width="128" height="28" uuid="4f132f4e-0fb1-4fc5-9be1-ea5e12a70adb"/>
+				<textElement>
+					<font fontName="Roboto" size="15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="24" y="0" width="64" height="28" uuid="66dcf561-59f2-4b52-91eb-d0ebbdcb04c6"/>
+				<textElement>
+					<font fontName="Roboto" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Factura:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy HH:mm">
+				<reportElement x="419" y="26" width="139" height="28" uuid="396dd207-e30a-4562-92fe-b5ac75de9dd6"/>
+				<textElement>
+					<font fontName="Roboto" size="15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="371" y="26" width="48" height="28" uuid="96c0941c-7cc5-4034-b1a9-4ab0cdf42970"/>
+				<textElement>
+					<font fontName="Roboto" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="67" splitType="Stretch">
+			<staticText>
+				<reportElement x="24" y="35" width="169" height="20" uuid="79e36e46-68f2-4c48-820a-ff922a779e1c"/>
+				<textElement textAlignment="Center">
+					<font fontName="Roboto" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha y hora de entrada]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="206" y="35" width="163" height="20" uuid="bd06bb09-f124-48c0-8189-337e408e6caa"/>
+				<textElement textAlignment="Center">
+					<font fontName="Roboto" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha y hora de salida]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="35" width="100" height="20" uuid="c2789fc8-8fd2-4a1a-8f51-76525fa79dcf"/>
+				<textElement textAlignment="Center">
+					<font fontName="Roboto" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tiempo trabajado]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="34" width="572" height="1" uuid="1c57f309-995b-4a21-a7fd-9d8e05f17998"/>
+			</line>
+			<line>
+				<reportElement x="1" y="55" width="571" height="1" uuid="a9d9d0d5-e586-4bd2-8db9-b320c9596d14"/>
+			</line>
+			<staticText>
+				<reportElement x="481" y="36" width="76" height="20" uuid="736753e9-b1fe-4469-a21a-d3aaa505cf33"/>
+				<textElement textAlignment="Center">
+					<font fontName="Roboto" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pago]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="2" width="572" height="34" uuid="df202c5e-e632-48f0-8e25-33150b31128a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Roboto" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Detalle de registro diario]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy HH:mm">
+				<reportElement x="24" y="1" width="169" height="20" uuid="f262d3ed-76a4-4fa4-9e3f-92dab7121dac"/>
+				<textElement textAlignment="Center">
+					<font fontName="Roboto" size="15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{entrada}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy HH:mm">
+				<reportElement x="206" y="1" width="163" height="20" uuid="8d498340-2eac-437a-b218-7548ef55bb46"/>
+				<textElement textAlignment="Center">
+					<font fontName="Roboto" size="15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{salida}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="370" y="1" width="100" height="20" uuid="104fced8-965e-4f97-9514-a06b97495009"/>
+				<textElement textAlignment="Center">
+					<font fontName="Roboto" size="15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tiempo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="481" y="0" width="76" height="20" uuid="75cb84e6-82fe-4931-b71a-76d444edc516"/>
+				<textElement textAlignment="Center">
+					<font fontName="Roboto" size="15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pago}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="85" splitType="Stretch">
+			<textField>
+				<reportElement x="122" y="10" width="73" height="22" uuid="f3d1466a-7e5f-4916-9010-004211028e25"/>
+				<textElement>
+					<font fontName="Roboto" size="15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="26" y="10" width="96" height="22" uuid="57bf1407-0cad-4153-9c9c-a90b2ce693f2"/>
+				<textElement>
+					<font fontName="Roboto" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total a pagar:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy HH:mm">
+				<reportElement x="420" y="58" width="121" height="27" uuid="9374117f-be00-4686-9660-209d2c0feaf7"/>
+				<textElement>
+					<font fontName="Roboto" size="15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="331" y="58" width="89" height="27" uuid="232df77e-e0de-4836-ab96-9f2e2fc26a89"/>
+				<textElement>
+					<font fontName="Roboto" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Generado el:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="154" y="32" width="194" height="27" uuid="2dba7720-4187-4e0c-972b-085c47a42a34"/>
+				<textElement>
+					<font fontName="Roboto" size="15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dias_trabajados}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="27" y="32" width="124" height="27" uuid="2b108c77-cc12-49a3-a2f8-247ac9ae4793"/>
+				<textElement>
+					<font fontName="Roboto" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Intervalo cubierto:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="5" width="571" height="1" uuid="f25d0afd-8eb7-426c-91f8-030794843b5a"/>
+			</line>
+		</band>
+	</columnFooter>
+</jasperReport>
